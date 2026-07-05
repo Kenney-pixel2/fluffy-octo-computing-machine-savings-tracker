@@ -10,3 +10,13 @@ def test_create_challenge() -> None:
     assert challenge.name == "Groceries"
     assert challenge.target_amount == 5_000
     assert challenge.target_days == 30
+
+
+def test_calculate_daily_target() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    assert challenge.daily_target == 5_000 / 30

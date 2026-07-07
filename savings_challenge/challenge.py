@@ -1,11 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
-@dataclass(frozen=True)
+@dataclass
 class Challenge:
     name: str
     target_amount: int
     target_days: int
+    completed_days: int = field(default=0)
 
     @property
     def daily_target(self) -> float:
@@ -19,3 +20,6 @@ class Challenge:
             return base + 1
 
         return base
+
+    def complete_day(self) -> None:
+        self.completed_days += 1

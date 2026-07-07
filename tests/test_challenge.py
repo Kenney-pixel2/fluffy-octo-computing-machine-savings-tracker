@@ -52,3 +52,15 @@ def test_total_of_all_days_equals_target_amount() -> None:
     total = sum(challenge.amount_for_day(day) for day in range(1, 31))
 
     assert total == 5000
+
+
+def test_complete_day_increments_completed_days() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    challenge.complete_day()
+
+    assert challenge.completed_days == 1

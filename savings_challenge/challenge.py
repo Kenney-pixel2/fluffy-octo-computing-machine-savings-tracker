@@ -23,3 +23,7 @@ class Challenge:
 
     def complete_day(self) -> None:
         self.completed_days += 1
+
+    @property
+    def remaining_days(self) -> int:
+        return self.target_days - self.completed_days

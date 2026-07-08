@@ -238,3 +238,45 @@ Questions to answer:
 - How many days are left to complete the challenge?
 - Does completing a day reduce the remaining days?
 - Can a challenge ever have a negative number of remaining days?
+
+---
+
+# Challenge Day No. 6  — Tracking Remaining Days
+**Date:** 2026/07/08
+
+## Feature: Track Remaining Days
+
+> As a saver,
+>
+> I want to know how many days remain in my challenge,
+>
+> so that I can track my progress toward completion.
+
+### Background:
+
+Given the target days are set to \<target>
+
+#### Scenario Outline: Calculate remaining days for different completion levels
+
+- **Given** the target days are \<target>
+- **And** the completed days are \<completed>
+- **When** I calculate the remaining days
+- **Then** the remaining days should be \<remaining>
+
+    **Examples:**
+
+    | target | completed | remaining |
+    |--------|-----------|-----------|
+    | 30     | 0         | 30        |
+    | 30     | 1         | 29        |
+
+### Tests
+
+- `def test_new_challenge_has_all_days_remaining() -> None`
+- `def test_completed_day_reduces_remaining_days() -> None`
+
+### Git
+
+```
+    feat: calculate remaining challenge days
+```

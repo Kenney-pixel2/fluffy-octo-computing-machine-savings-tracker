@@ -64,3 +64,25 @@ def test_complete_day_increments_completed_days() -> None:
     challenge.complete_day()
 
     assert challenge.completed_days == 1
+
+
+def test_new_challenge_has_all_days_remaining() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    assert challenge.remaining_days == 30
+
+
+def test_completed_day_reduces_remaining_days() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    challenge.complete_day()
+
+    assert challenge.remaining_days == 29

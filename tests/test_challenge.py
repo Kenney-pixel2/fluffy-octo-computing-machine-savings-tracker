@@ -1,4 +1,4 @@
-from savings_challenge.challenge import Challenge
+from challenge.challenge import Challenge
 
 
 def test_create_challenge() -> None:

@@ -275,8 +275,25 @@ Given the target days are set to \<target>
 - `def test_new_challenge_has_all_days_remaining() -> None`
 - `def test_completed_day_reduces_remaining_days() -> None`
 
+## Design Decisions
+
+- Exposed `remaining_days` as a read-only property because it is derived state.
+- Calculated the value directly from `target_days` and `completed_days` instead of storing redundant data.
+- Deferred validation against negative values until a future requirement demands it, 
+following the TDD principle of implementing only the behavior required by the current tests.
+
 ### Git
 
 ```
     feat: calculate remaining challenge days
 ```
+
+### Lessons Learned
+
+Derived values should not be stored when they can be calculated from existing state. 
+Keeping `remaining_days` as a computed property avoids duplication 
+and ensures the value is always consistent with the challenge's progress.
+
+### Next Day Challenge
+
+Refactor the project to use the standard Python src/ layout while keeping all tests passing.

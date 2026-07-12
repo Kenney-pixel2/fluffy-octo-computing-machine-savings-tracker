@@ -297,3 +297,133 @@ and ensures the value is always consistent with the challenge's progress.
 ### Next Day Challenge
 
 Refactor the project to use the standard Python src/ layout while keeping all tests passing.
+
+---
+
+# Challenge Day No. 7 — Adopt the `src/` Layout
+
+**Date:** 2026-07-10
+
+## User Story
+
+> As a developer,
+>
+> I want to organize the project using the standard `src/` layout,
+>
+> so that imports are explicit and tests execute against the installed package instead of the source tree.
+
+## Objective
+
+Refactor the project to use the standard Python `src/` layout while keeping all tests passing.
+
+## Tasks
+
+Before ending Challenge Day No. 7, verify that all of the following are complete:
+
+- [x] Refactored the project to use the `src/` layout.
+- [x] Updated `pyproject.toml` to recognize the package in `src/`.
+- [x] Ran `poetry install` successfully.
+- [x] Verified that all imports continue to work correctly.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+## Lessons Learned
+
+Software engineering isn't just adding features—it also involves improving the structure that supports those features.
+
+Adopting the standard `src/` layout early in the project makes the package structure more explicit and ensures that tests run against the installed package rather than relying on the current working directory.
+
+## Git Commits
+
+```text
+refactor: adopt src project layout
+```
+
+## Next Challenge Day
+
+Determine when a challenge is complete.
+
+Questions to answer:
+
+- When should a challenge be considered complete?
+- Does completing the final day mark the challenge as complete?
+- Can a challenge still be completed more than once?
+
+---
+
+# Challenge Day No. 8 — Complete a Challenge
+**Date:** 2026-07-13
+
+## User Story
+
+> As a saver,
+>
+> I want to know when my savings challenge is complete,
+>
+> so that I can celebrate reaching my goal and stop tracking that challenge.
+
+## Objective
+
+A `Challenge` should report whether it has been completed.
+
+## Acceptance Criteria
+
+A challenge is **not complete** when:
+```
+Target Days    : 30
+Completed Days : 29
+```
+A challenge **is complete** when:
+```
+Target Days    : 30
+Completed Days : 30
+```
+
+## Design Decisions
+
+- Exposed `is_complete` as a read-only property because completion is derived from the challenge's progress.
+- Considered a challenge complete when `completed_days` is greater than or equal to `target_days`.
+- Deferred deciding how to handle attempts to complete an already finished challenge until a future requirement introduces that behavior.
+
+## Tasks
+
+Before ending Challenge Day No. 8, verify that all of the following are complete:
+
+- [x] Added the `is_complete` property.
+- [x] Verified that a new challenge is not complete.
+- [x] Verified that completing all days marks the challenge as complete.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+## Git Commits
+
+```text
+
+feat: determine when a challenge is complete
+
+```
+
+## Lessons Learned
+
+    Not every piece of state needs to be stored. Like `remaining_days`, 
+whether a challenge is complete can be derived from existing data. 
+Keeping derived state out of the model reduces duplication and helps ensure consistency.
+
+
+## Next Challenge Day
+
+Prevent a completed challenge from being completed again.
+
+*Questions to answer:*
+
+- What should happen if `complete_day()` is called after the challenge is already complete?
+- Should the method raise an exception or simply ignore the request?
+- How can we ensure that `completed_days` never exceeds `target_days`?

@@ -27,3 +27,7 @@ class Challenge:
     @property
     def remaining_days(self) -> int:
         return self.target_days - self.completed_days
+
+    @property
+    def is_complete(self) -> bool:
+        return self.completed_days >= self.target_days

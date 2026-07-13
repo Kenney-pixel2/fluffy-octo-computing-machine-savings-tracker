@@ -1,3 +1,5 @@
+import pytest
+
 from challenge.challenge import Challenge
 
 
@@ -109,3 +111,17 @@ def test_challenge_is_complete_after_final_day() -> None:
         challenge.complete_day()
 
     assert challenge.is_complete
+
+
+def test_cannot_complete_more_days_than_target() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    for _ in range(30):
+        challenge.complete_day()
+
+    with pytest.raises(ValueError):
+        challenge.complete_day()

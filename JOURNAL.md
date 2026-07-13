@@ -413,7 +413,7 @@ feat: determine when a challenge is complete
 
 ## Lessons Learned
 
-    Not every piece of state needs to be stored. Like `remaining_days`, 
+Not every piece of state needs to be stored. Like `remaining_days`, 
 whether a challenge is complete can be derived from existing data. 
 Keeping derived state out of the model reduces duplication and helps ensure consistency.
 
@@ -427,3 +427,125 @@ Prevent a completed challenge from being completed again.
 - What should happen if `complete_day()` is called after the challenge is already complete?
 - Should the method raise an exception or simply ignore the request?
 - How can we ensure that `completed_days` never exceeds `target_days`?
+
+---
+# Challenge Day No. 9 -- Prevent Completing a Challenge Twice
+
+**Date:** 2026-07-14
+
+## User Story
+
+> As a saver,
+>
+> I want a completed challenge to reject additional completed days,
+>
+> so that my progress always reflects reality.
+>
+
+## Objective
+
+Prevent `completed_days` from ever exceeding `target_days`.
+
+## Acceptance Criteria
+
+**Given**
+
+```
+
+Target Days     : 30
+Completed Days  : 30
+
+```
+
+**When** I issue this command
+
+```
+
+challenge.complete_day()
+
+```
+
+**Then** the app should reject the command.
+
+## Design Discussion
+
+**Handling Invalid Operations**
+
+*Objective:* Establish a consistent strategy for rejecting invalid operations 
+before implementation begins.
+
+*Candidate Approaches*
+
+    Ignore the call – Silently discard the operation.
+
+    Return False – Indicate failure via a boolean response.
+
+    Raise an exception – Halt execution with an explicit error.
+
+**Recommendation: Raise an Exception**
+
+*Rationale*
+
+    🔍 Immediate failure detection – Invalid operations (e.g., advancing to Day 31 in a 
+    30‑day challenge) indicate a programming error, not a routine runtime condition.
+
+    🛡️ Fail‑fast principle – Exceptions expose bugs at the source, 
+    preventing silent data corruption or inconsistent state.
+
+    📐 Semantic clarity – The caller is forced to handle or acknowledge the error, 
+    making code self‑documenting.
+
+*Implementation Plan*
+
+    Initial choice: Use Python’s built‑in ValueError – simple, standard, and sufficient 
+    for current needs.
+
+    Future extension: If the project evolves to require richer domain signaling 
+    (e.g., ChallengeAlreadyCompletedError), we can introduce custom exception subclasses 
+    without changing the overall handling strategy.
+
+*Key Takeaway*
+
+    Exceptions are the preferred mechanism for invalid‑operation scenarios, 
+    aligning with defensive programming and maintainability goals.
+
+## Tasks
+
+Before ending Challenge Day No. 9, verify that all of the following are complete:
+
+- [x] Prevented a completed challenge from being completed again.
+- [x] Verified that attempting to exceed the target days raises a ValueError.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+## Git
+
+```
+
+feat: prevent completing challenge beyond target days
+
+```
+
+## Lessons Learned
+
+A domain model should enforce its own business rules. 
+By preventing invalid state transitions inside the `Challenge` class, 
+we ensure that every part of the application can rely on the model to remain consistent, 
+regardless of how it is used.
+
+## Next Challenge Day
+
+Calculate the total amount saved based on completed challenge days.
+
+Questions to answer:
+
+- How much has been saved so far?
+- Does the calculation account for the distributed remainder?
+- Does the saved amount always match the sum of the completed daily targets?
+
+
+

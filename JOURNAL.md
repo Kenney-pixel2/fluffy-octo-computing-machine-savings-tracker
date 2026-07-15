@@ -547,5 +547,97 @@ Questions to answer:
 - Does the calculation account for the distributed remainder?
 - Does the saved amount always match the sum of the completed daily targets?
 
+---
+Challenge Day No. 10 — Calculate Amount Saved
+**Date:** 07-15-2026
 
+## User Story
 
+> As a saver,
+>
+> I want to know how much money I have saved,
+>
+> so that I can measure my progress toward my savings goal.
+
+## Objective
+
+Calculate the total amount saved based on the completed challenge days.
+
+## Acceptance Criteria
+
+**Given**
+
+```
+Target Amount : ₱5,000
+Target Days   : 30
+```
+
+**When** the schedule is
+
+```
+Days 1–20 : ₱167
+Days 21–30: ₱166
+```
+
+**And** 
+
+```
+Completed Days : 5
+```
+
+**Then**
+```
+Amount Saved : ₱835
+```
+
+## Design Decision
+
+Following the DRY principle, Calculate it whenever needed.
+
+```python
+
+@property
+def amount_saved(self) -> int:
+    ...
+
+```
+
+## Tasks
+
+Before ending Challenge Day No. 10, verify that all of the following are complete:
+
+- [x] Added the amount_saved property.
+- [x] Verified that a new challenge starts with zero pesos saved.
+- [x] Verified the saved amount after completing several days.
+- [x] Verified that a completed challenge has saved the target amount.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+## Git
+
+```
+
+feat: calculate saved amount from completed days
+
+```
+
+## Lessons Learned
+
+Derived state should be computed from existing behavior whenever possible. 
+By building `amount_saved` on top of `amount_for_day()`, 
+the model has a single source of truth for the daily savings schedule, 
+reducing duplication and making future changes easier to maintain.
+
+## Next Challenge Day
+
+Calculate challenge progress as a percentage.
+
+Questions to answer:
+
+- What percentage of the challenge has been completed?
+- Should a new challenge report 0% progress?
+- Should a completed challenge report exactly 100% progress?

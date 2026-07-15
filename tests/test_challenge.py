@@ -125,3 +125,39 @@ def test_cannot_complete_more_days_than_target() -> None:
 
     with pytest.raises(ValueError):
         challenge.complete_day()
+
+
+def test_new_challenge_has_saved_nothing() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    assert challenge.amount_saved == 0
+
+
+def test_amount_saved_after_five_days() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5_000,
+        target_days=30,
+    )
+
+    for _ in range(5):
+        challenge.complete_day()
+
+    assert challenge.amount_saved == 835
+
+
+def test_completed_challenge_has_saved_target_amount() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5000,
+        target_days=30,
+    )
+
+    for _ in range(30):
+        challenge.complete_day()
+
+    assert challenge.amount_saved == 5000

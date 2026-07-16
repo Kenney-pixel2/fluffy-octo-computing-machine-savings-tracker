@@ -548,7 +548,7 @@ Questions to answer:
 - Does the saved amount always match the sum of the completed daily targets?
 
 ---
-Challenge Day No. 10 — Calculate Amount Saved
+# Challenge Day No. 10 — Calculate Amount Saved
 **Date:** 07-15-2026
 
 ## User Story
@@ -641,3 +641,104 @@ Questions to answer:
 - What percentage of the challenge has been completed?
 - Should a new challenge report 0% progress?
 - Should a completed challenge report exactly 100% progress?
+
+---
+
+## Challenge Day No. 11 - Calculate Challenge Progress
+
+**Date:** July 17, 2026
+
+## User Story
+
+> As a saver,
+>
+> I want to see my overall progress,
+>
+> so that I can quickly understand how far I am from completing my savings challenge.
+
+## Objective
+
+Calculate the challenge's progress as a percentage.
+
+## Acceptance Criteria
+
+A new challenge should report:
+
+```
+Completed Days : 0
+Progress       : 0%
+```
+
+Halfway through the challenge:
+
+```
+Completed Days : 15
+Target Days    : 30
+
+Progress       : 50%
+```
+
+A completed challenge should report:
+
+```
+Completed Days : 30
+Progress       : 100%
+```
+
+## Design Dicussion
+
+There are several ways to represent progress:
+
+- integer percentage
+
+- decimal
+
+- double percentage
+
+**Recommendation:** integer percentage
+
+**Rationale:** 
+
+- Simple to display in the GUI.
+- No floating-point rounding surprises.
+- Easy to use with a progress bar.
+
+## Tasks
+
+Before ending Challenge Day No. 11, verify that all of the following are complete:
+
+- [x] Added the progress_percentage property.
+- [x] Verified that a new challenge starts at 0% progress.
+- [x] Verified that a halfway-completed challenge reports 50% progress.
+- [x] Verified that a completed challenge reports 100% progress.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+## Git
+
+```
+
+feat: calculate challenge progress percentage
+
+```
+
+## Lessons Learned
+
+Progress is another example of derived state. Computing it from existing data keeps 
+the model simple and ensures that the reported progress is always consistent with 
+the challenge's current state.
+
+## Next Day Challenge
+
+Introduce a `ChallengeManager` to manage multiple challenges.
+
+Questions to answer:
+
+- How are challenges added and removed?
+- How can all active challenges be retrieved?
+- How does the application ensure each challenge has a unique identity?
+

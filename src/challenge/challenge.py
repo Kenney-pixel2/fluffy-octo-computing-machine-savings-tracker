@@ -40,3 +40,7 @@ class Challenge:
         return sum(
             self.amount_for_day(day) for day in range(1, self.completed_days + 1)
         )
+
+    @property
+    def progress_percentage(self) -> int:
+        return (self.completed_days * 100) // self.target_days

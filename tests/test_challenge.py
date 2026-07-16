@@ -161,3 +161,39 @@ def test_completed_challenge_has_saved_target_amount() -> None:
         challenge.complete_day()
 
     assert challenge.amount_saved == 5000
+
+
+def test_new_challenge_has_zero_percent_progress() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5000,
+        target_days=30,
+    )
+
+    assert challenge.progress_percentage == 0
+
+
+def test_half_completed_challenge_has_fifty_percent_progress() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5000,
+        target_days=30,
+    )
+
+    for _ in range(15):
+        challenge.complete_day()
+
+    assert challenge.progress_percentage == 50
+
+
+def test_completed_challenge_has_one_hundred_percent_progress() -> None:
+    challenge = Challenge(
+        name="Groceries",
+        target_amount=5000,
+        target_days=30,
+    )
+
+    for _ in range(30):
+        challenge.complete_day()
+
+    assert challenge.progress_percentage == 100

@@ -742,3 +742,117 @@ Questions to answer:
 - How can all active challenges be retrieved?
 - How does the application ensure each challenge has a unique identity?
 
+---
+
+## Challenge Day No. 12 — Introduce ChallengeManager
+
+**Date:** July 18, 2026
+
+### User Story
+
+> As a saver,
+>
+> I want the application to manage multiple savings challenges,
+>
+> so that I can work toward several financial goals at the same time.
+>
+
+### Objective
+
+Introduce a ChallengeManager that maintains a collection of Challenge objects.
+
+### Design Discussion
+
+Today we need to answer an important question.
+
+Where should multiple challenges live?
+
+Not here:
+
+```python
+
+Challenge
+
+```
+
+A Challenge should never know about other challenges.
+
+Instead:
+
+```
+
+ChallengeManager
+    ├── Challenge
+    ├── Challenge
+    ├── Challenge
+
+```
+
+This follows the Single Responsibility Principle.
+
+Challenge manages one challenge.
+ChallengeManager manages many challenges.
+
+## Acceptance Criteria
+
+A new manager
+
+```
+
+ChallengeManager()
+
+```
+
+contains
+
+```
+
+0 challenges
+
+```
+
+After adding one challenge
+
+```
+
+1 challenge
+
+```
+
+### Tasks
+
+Before ending Challenge Day No. 12, verify that all of the following are complete:
+
+- [x] Added the ChallengeManager class.
+- [x] Verified that a new manager starts with zero challenges.
+- [x] Added the ability to add a Challenge.
+- [x] Verified that the manager tracks the correct number of challenges.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+### Git
+
+```
+feat: introduce ChallengeManager
+
+```
+
+### Lessons Learned
+
+Managing a collection of objects is a different responsibility from modeling a single object. 
+Introducing `ChallengeManager` keeps the domain model cohesive and prepares the application 
+for managing multiple savings challenges without increasing the complexity of the `Challenge` 
+class.
+
+### Next Day Challenge
+Retrieve managed challenges.
+
+Questions to answer:
+
+- How can all managed challenges be retrieved?
+- Should the internal collection remain protected from modification?
+- Should challenges be returned in the order they were added?

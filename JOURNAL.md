@@ -856,3 +856,136 @@ Questions to answer:
 - How can all managed challenges be retrieved?
 - Should the internal collection remain protected from modification?
 - Should challenges be returned in the order they were added?
+
+---
+
+## Challenge Day No. 13 — Retrieve Challenges
+
+**Date:** July 20, 2026
+
+### User Story
+
+> As a saver,
+>
+> I want to view all my savings challenges,
+>
+> so that I can choose one to inspect or update.
+
+### Objective
+
+Allow the ChallengeManager to return all managed challenges 
+while protecting its internal collection.
+
+### Design Discussion
+
+Today's question is subtle.
+
+Should we do this?
+
+```
+
+manager._challenges
+
+```
+
+Absolutely not.The leading underscore tells us it's an implementation detail.
+
+Instead, we'll expose a read-only view.
+
+There are several options:
+
+Option A
+
+```
+list[Challenge]
+```
+
+Option B
+
+```
+tuple[Challenge, ...]
+```
+
+Option C
+
+A generator.
+
+**Result:** I recommend Option B.
+
+**Rationale:**
+
+Returning a tuple means callers can inspect the collection but cannot accidentally modify it.
+
+That protects one of the manager's invariants.
+
+## Acceptance Criteria
+
+A new manager
+
+```
+ChallengeManager()
+```
+
+returns
+
+```
+()
+```
+
+After adding two challenges
+
+```
+(
+    emergency_fund,
+    vacation
+)
+```
+
+in the same order they were added.
+
+### Tasks
+
+Before ending Challenge Day No. 13, verify that all of the following are complete:
+
+- [x] Added the challenges property.
+- [x] Verified that a new manager returns an empty collection.
+- [x] Verified that challenges are returned in the order they were added.
+- [x] Protected the internal collection from external modification.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+### Git Commit
+
+```
+
+feat: expose managed challenges
+
+```
+
+### Design Decisions
+
+- Exposed managed challenges through a read-only `challenges` property.
+- Returned a tuple instead of the internal list to protect the manager's state from external 
+modification.
+- Preserved the order in which challenges were added.
+- Kept the internal `_challenges` list private to maintain encapsulation.
+
+### Lessons Learned
+
+Encapsulation is not only about hiding data—it is also about controlling how data is exposed. 
+Returning a read-only tuple allows the rest of the application to inspect the managed challenges 
+
+### Next Day Challenge
+
+Remove a challenge.
+
+Questions to answer:
+
+- How can a challenge be removed from the manager?
+- What happens if the challenge does not exist?
+- Should removal preserve the order of the remaining challenges?
+without risking accidental modification of the manager's internal collection.

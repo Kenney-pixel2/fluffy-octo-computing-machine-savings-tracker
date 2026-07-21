@@ -989,3 +989,115 @@ Questions to answer:
 - What happens if the challenge does not exist?
 - Should removal preserve the order of the remaining challenges?
 without risking accidental modification of the manager's internal collection.
+
+---
+
+## Challenge Day No. 14 - Remove a Challenge
+
+**Date:** July 21, 2026
+
+### User Story
+
+> As a saver,
+>
+> I want to remove a savings challenge,
+>
+> so that I can discard goals that are no longer relevant.
+
+### Objective
+
+Allow `ChallengeManager` to remove an existing `Challenge`.
+
+### Design Discussion
+
+There are two reasonable APIs.
+
+**Option A**
+
+```python
+manager.remove_challenge(challenge)
+```
+
+**Option B**
+
+```python
+manager.remove_challenge_by_name("Vacation")
+```
+
+I recommend Option A.
+
+Why?
+
+ChallengeManager stores Challenge objects, not names. Names are just one attribute 
+and may not always be unique. Removing by object keeps the manager independent of 
+any future identification strategy, such as UUIDs.
+
+### Acceptance Criteria
+
+A manager containing:
+
+```
+Emergency Fund
+Vacation
+Laptop
+```
+
+After removing
+
+```
+Vacation
+```
+
+should contain
+
+```
+Emergency Fund
+Laptop
+```
+The order of the remaining challenges should be preserved.
+
+### Tasks
+
+Before ending Challenge Day No. 14, verify that all of the following are complete:
+
+- [x] Added the remove_challenge() method.
+- [x] Verified that an existing challenge can be removed.
+- [x] Verified that removing an unknown challenge raises ValueError.
+- [x] Verified that the remaining challenges preserve their original order.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+### Git Commit
+
+```
+
+feat: remove challenges from manager
+
+```
+
+### Design Decisions
+
+- Added `remove_challenge()` to remove a `Challenge` by object reference.
+- Chose not to remove challenges by name because names are not guaranteed to be unique.
+- Relied on Python's built-in `list.remove()` behavior to raise `ValueError` when attempting to remove a challenge that is not managed.
+- Preserved the insertion order of the remaining challenges after removal.
+
+### Lessons Learned
+
+Good software often builds on the behavior already provided by the standard library. 
+By relying on `list.remove()` instead of adding custom checks, 
+the implementation stays small, readable, and consistent with Python's own collection semantics.
+
+### Next Challenge Day
+
+Find a challenge by name.
+
+Questions to answer:
+
+- How can a challenge be located by its name?
+- What should happen if no matching challenge exists?
+- Should name matching be case-sensitive?

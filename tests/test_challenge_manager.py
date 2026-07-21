@@ -1,3 +1,5 @@
+import pytest
+
 from challenge.challenge import Challenge
 from challenge.challenge_manager import ChallengeManager
 
@@ -50,3 +52,39 @@ def test_manager_returns_challenges_in_added_order() -> None:
         emergency,
         vacatio,
     )
+
+
+def test_remove_existing_challenge() -> None:
+    manager = ChallengeManager()
+
+    emergency = Challenge(
+        name="Emergency Fund",
+        target_amount=10000,
+        target_days=60,
+    )
+
+    vacation = Challenge(
+        name="Vacation",
+        target_amount=30000,
+        target_days=180,
+    )
+
+    manager.add_challenge(emergency)
+    manager.add_challenge(vacation)
+
+    manager.remove_challenge(emergency)
+
+    assert manager.challenges == (vacation,)
+
+
+def test_removing_unknown_challenge_raises_value_error() -> None:
+    manager = ChallengeManager()
+
+    challenge = Challenge(
+        name="Vacation",
+        target_amount=30000,
+        target_days=180,
+    )
+
+    with pytest.raises(ValueError):
+        manager.remove_challenge(challenge)

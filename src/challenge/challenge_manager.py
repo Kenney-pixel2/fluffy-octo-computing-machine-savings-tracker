@@ -15,3 +15,6 @@ class ChallengeManager:
     @property
     def challenges(self) -> tuple[Challenge, ...]:
         return tuple(self._challenges)
+
+    def remove_challenge(self, challenge: Challenge) -> None:
+        self._challenges.remove(challenge)

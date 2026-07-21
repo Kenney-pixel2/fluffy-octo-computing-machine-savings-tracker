@@ -18,3 +18,10 @@ class ChallengeManager:
 
     def remove_challenge(self, challenge: Challenge) -> None:
         self._challenges.remove(challenge)
+
+    def find_challenge(self, name: str) -> Challenge | None:
+        for challenge in self._challenges:
+            if challenge.name == name:
+                return challenge
+
+        return None

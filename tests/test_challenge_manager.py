@@ -88,3 +88,23 @@ def test_removing_unknown_challenge_raises_value_error() -> None:
 
     with pytest.raises(ValueError):
         manager.remove_challenge(challenge)
+
+
+def test_find_existing_challenge_by_name() -> None:
+    manager = ChallengeManager()
+
+    vacation = Challenge(
+        name="Vacation",
+        target_amount=30000,
+        target_days=180,
+    )
+
+    manager.add_challenge(vacation)
+
+    assert manager.find_challenge("Vacation") is vacation
+
+
+def test_find_unknown_challenge_returns_none() -> None:
+    manager = ChallengeManager()
+
+    assert manager.find_challenge("Vacation") is None

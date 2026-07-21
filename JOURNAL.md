@@ -1101,3 +1101,117 @@ Questions to answer:
 - How can a challenge be located by its name?
 - What should happen if no matching challenge exists?
 - Should name matching be case-sensitive?
+
+---
+
+## Challenge Day 15 - Find a Challenge by Name
+
+**Date:** July 22, 2026
+
+## User Story
+
+> As a saver,
+>
+> I want to find one of my savings challenges by name,
+>
+> so that I can quickly open and manage it.
+
+## Objective
+
+Allow ChallengeManager to locate a challenge by its name.
+
+## Design Discussion
+
+```
+Today's design question is:
+
+What happens when the challenge doesn't exist?
+
+There are two common choices.
+
+    Option A
+
+        Return None
+
+    Option B
+
+        Raise an exception.
+
+I recommend Option A.
+
+Searching for something that isn't there isn't exceptional—it simply means there was no match. 
+Returning None is consistent with Python's conventions and makes the caller explicitly 
+handle that possibility.
+```
+
+### Acceptance Criteria
+
+**Given**
+
+```
+Emergency Fund
+Vacation
+Laptop
+```
+
+**When** I search for "Vacation"
+
+it returns
+
+```
+Challenge("Vacation")
+```
+
+**But when** I search for "Christmas"
+
+it returns
+
+```
+None
+```
+
+### Git Commit
+
+```
+
+feat: find challenges by name
+
+```
+
+### Design Decisions
+
+- Added `find_challenge()` to locate a challenge by its name.
+- Returned `None` when no matching challenge exists instead of raising an exception.
+- Performed a simple linear search through the managed challenges, following the YAGNI principle.
+- Deferred introducing indexed lookups until a real performance requirement exists.
+
+### Lessons Learned
+
+The simplest solution is often the best starting point. 
+A straightforward linear search is easy to understand, easy to test, 
+and more than adequate for the small number of challenges expected in this application. 
+Optimizations should be driven by measured needs rather than speculation.
+
+### Next Challenge Day
+
+Introduce a `ChallengeRepository` abstraction.
+
+Questions to answer:
+
+- How should challenges be saved and loaded?
+- Should `ChallengeManager` know about files?
+- How can persistence be designed without coupling it to the domain model?
+
+### Tasks
+
+Before ending Challenge Day No. 15, verify that all of the following are complete:
+
+- [x] Added the find_challenge() method.
+- [x] Verified that an existing challenge can be found by name.
+- [x] Verified that searching for an unknown challenge returns None.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.

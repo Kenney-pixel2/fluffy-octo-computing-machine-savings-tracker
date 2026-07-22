@@ -1215,3 +1215,86 @@ Before ending Challenge Day No. 15, verify that all of the following are complet
 - [x] Code committed.
 - [x] Journal updated.
 - [x] Changes pushed to GitHub.
+
+---
+
+## Challenge Day No. 16 — Rename a Challenge
+
+**Date:** 2026-07-23
+
+### User Story
+
+> As a saver,
+>
+> I want to rename one of my savings challenges,
+>
+> so that I can better describe my financial goal as it changes.
+
+### Objective
+
+Allow the name of a Challenge to be updated.
+
+### Design Discussion
+
+Should we allow direct assignment?
+
+```python
+challenge.name = "Japan Vacation"
+```
+
+Or should we create a method?
+
+```python
+challenge.rename("Japan Vacation")
+```
+
+I recommend the method.
+
+Why?
+
+Because today renaming is simple.
+
+Tomorrow we might enforce:
+
+-   no empty names
+-   maximum length
+-   trimming whitespace
+-   duplicate-name checks (through `ChallengeManager`)
+
+A method gives us one place to grow the behavior.
+
+### Design Decisions
+
+- Added a `rename()` method instead of exposing unrestricted direct assignment.
+- Prevented empty or whitespace-only challenge names.
+- Kept validation inside the `Challenge` class so that every rename follows the same business rules.
+
+### Git Commit
+
+```
+
+feat: support renaming challenges
+
+```
+
+### Lessons Learned
+
+Even simple operations deserve clear domain behavior. 
+Wrapping a state change in a method allows the model to enforce its own rules 
+and provides a natural place to add future validation without changing the rest of the application.
+
+### Tasks
+
+Before ending Challenge Day No. 16, verify that all of the following are complete:
+
+- [x] Added the rename() method.
+- [x] Verified that a challenge can be renamed.
+- [x] Verified that an empty name raises ValueError.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+
+
+ Changes pushed to GitHub.

@@ -108,3 +108,15 @@ def test_find_unknown_challenge_returns_none() -> None:
     manager = ChallengeManager()
 
     assert manager.find_challenge("Vacation") is None
+
+
+def test_rename_challenge() -> None:
+    challenge = Challenge(
+        name="Vacation",
+        target_amount=30000,
+        target_days=180,
+    )
+
+    challenge.rename("Japan Vacation")
+
+    assert challenge.name == "Japan Vacation"

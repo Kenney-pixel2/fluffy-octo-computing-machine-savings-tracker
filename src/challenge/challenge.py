@@ -44,3 +44,9 @@ class Challenge:
     @property
     def progress_percentage(self) -> int:
         return (self.completed_days * 100) // self.target_days
+
+    def rename(self, new_name: str) -> None:
+        if not new_name.strip():
+            raise ValueError("Challenge name cannot be empty.")
+
+        self.name = new_name

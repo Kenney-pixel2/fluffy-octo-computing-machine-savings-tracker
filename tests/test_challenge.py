@@ -197,3 +197,14 @@ def test_completed_challenge_has_one_hundred_percent_progress() -> None:
         challenge.complete_day()
 
     assert challenge.progress_percentage == 100
+
+
+def test_cannot_rename_to_empty_string() -> None:
+    challenge = Challenge(
+        name="Vacation",
+        target_amount=30000,
+        target_days=180,
+    )
+
+    with pytest.raises(ValueError):
+        challenge.rename("")

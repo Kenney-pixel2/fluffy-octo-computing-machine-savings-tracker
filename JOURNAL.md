@@ -1295,6 +1295,123 @@ Before ending Challenge Day No. 16, verify that all of the following are complet
 - [x] pytest passes.
 - [x] Code committed.
 - [x] Journal updated.
+- [x] Changes pushed to GitHub.
 
+---
 
- Changes pushed to GitHub.
+## Challenge Day No. 17 -- Introduce `ChallengeService`
+
+**Data:** July 26, 2026
+
+### User Story
+
+> As the developer,
+>
+> I want a single service to coordinate challenge-related operations,
+>
+> so that the user interface can focus on presentation instead of business logic.
+
+### Objective
+
+Introduce a ChallengeService that acts as the entry point for application use cases.
+
+At the end of today, it will have only one responsibility: Create a new challenge.
+
+### Design Discussion
+
+#### Question 1: Why a Service?
+
+Today, if the GUI wants to create a challenge, it would have to know:
+
+- How to construct a `Challenge`.
+- How to add it to the `ChallengeManager`.
+
+That means the GUI knows too much and becomes coupled to the application's business logic.
+
+---
+
+#### Question 2: Should `ChallengeService` own a `ChallengeManager`, or should one be supplied?
+
+I recommend **dependency injection**:
+
+```python
+manager = ChallengeManager()
+service = ChallengeService(manager)
+```
+
+*Why*?
+
+Because it:
+
+- Keeps the service easy to test.
+- Makes dependencies explicit instead of hidden.
+- Allows different `ChallengeManager` implementations (or test doubles) to be supplied when needed.
+
+### Acceptance Criteria
+
+**Given:**
+
+ChallengeManager
+
+**When:**
+
+```python
+service.create_challenge(
+    name="Emergency Fund",
+    target_amount=10000,
+    target_days=60,
+)
+```
+
+**Then:**
+
+```python
+manager.challenge_count == 1
+```
+
+### Design Decisions
+
+- Introduced `ChallengeService` as the application's first service layer.
+- Injected `ChallengeManager` into the service rather than creating it internally.
+- Kept the service responsible for orchestrating use cases, while leaving business rules inside the domain model.
+- Began separating application logic from user interface concerns.
+
+### Git Commit
+
+```
+
+feat: introduce ChallengeService
+
+```
+
+### Lessons Learned
+
+As an application grows, it helps to separate *what the user wants to do* 
+from *how the domain objects accomplish it*. The service layer acts as a coordinator, 
+allowing the user interface to express use cases without becoming responsible 
+for constructing or managing domain objects directly.
+
+### Tasks
+
+Before ending Challenge Day No. 17, verify that all of the following are complete:
+
+- [x] Added the ChallengeService class.
+- [x] Injected a ChallengeManager into the service.
+- [x] Added the create_challenge() use case.
+- [x] Verified that creating a challenge adds it to the manager.
+- [x] Ruff passes.
+- [x] mypy passes.
+- [x] pytest passes.
+- [x] Code committed.
+- [x] Journal updated.
+- [x] Changes pushed to GitHub.
+
+### Next Challenge Day
+
+Complete a challenge through the service.
+
+Questions to answer:
+
+- How does the service locate the correct challenge?
+- Should the service expose domain objects to the UI?
+- How should errors be handled when a challenge cannot be found?
